@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>textAssist</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href='http://fonts.googleapis.com/css?family=Droid Serif' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="styles.css" media="screen">
+<link rel="stylesheet" href="textassist.css" media="screen">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="textassist.js"></script>
+<script>
+$(document).ready(function(){
+
+	function isValidURL(url){
+		var RegExp = /^(([\w]+:)?\/\/)?(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,4}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?$/;
+		return RegExp.test(url);
+	}
+
+	function isValidEmail(email) {
+		var RegExp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+		return RegExp.test(email);
+	}
+
+	$('body').textAssist({
+		items: [
+			{
+				title: "Go to &quot;{%s}&quot;",
+				classN: "goto",
+				onShow: function(text, offset) {
+					if(!isValidURL(text) || isValidEmail(text)) offset.hide();
+				},
+				onClick: function(text, offset){
+					window.open('http://'+text.replace('http://'));
+				}
+			},
+			{
+				title: "Envoyer à &quot;{%s}&quot;",
+				classN: "mailto",
+				onShow: function(text, offset) {
+					if(!isValidEmail(text)) offset.hide();
+				},
+				onClick: function(text, offset){
+					window.location.href = 'mailto:'+text;
+				}
+			},
+			{
+				title: "Rechercher &quot;{%s}&quot;",
+				onClick: function(text, offset){
+					return false;
+				},
+				classN: "search",
+				href: "http://google.com/search?q={%s}",
+				target: "_blank"
+			},
+			{
+				title: "Wikipedia (fr)",
+				classN: "wikipedia",
+				href: "http://fr.wikipedia.org/w/index.php?title=Special:Search&search={%s}",
+				target: "_blank",
+				onShow: function(text, offset) {
+					if(isValidEmail(text) || (text.length > 50)) offset.hide();
+				}
+			},
+			{
+				title: "Translate",
+				classN: "translate",
+				href: "http://translate.google.com/?q={%s}",
+				target: "_blank",
+				onShow: function(text, offset) {
+					if(isValidEmail(text)) offset.hide();
+				}
+			},
+			{
+				divider: true,
+				onShow: function(text, offset) {
+					if(isValidEmail(text)) offset.hide();
+				}
+			},
+			{
+				title: "Map with Google",
+				classN: "map",
+				href: "http://maps.google.com/maps?q={%s}",
+				onShow: function(text, offset) {
+					if(isValidEmail(text)) offset.hide();
+				}
+			},
+			{
+				divider: true,
+				onShow: function(text, offset) {
+					if(isValidEmail(text)) offset.hide();
+				}
+			},
+			{
+				title: "Email",
+				classN: "email",
+				href: "mailto:someone@some.domain?body={%s}",
+				onShow: function(text, offset) {
+					if(isValidEmail(text)) offset.hide();
+				}
+			}
+		]
+	});
+
+});
+</script>
+</head>
+<body scroll="auto">
+
+<div class="container" id="container">
+<h1 class="logo">textAssist<span>A powerful and elegant assistant for your users about texts. Select some Words, URLs and Emails from below.</span></h1>
+<hr>
+
+<h1 class="logo">Client Riche<span>jQuery >> Plugin</span></h1>
+<hr>
+
+<p>Un plugin jQuery est tout simplement une nouvelle méthode (fonction membre) que nous ajoutons à l'objet .prototype de la fonction jQuery.</p>
+
+<p>De cette façon, tous les objets fabriqués par la fonction jQuery, que nous appelons tableaux jQuery dans ce cours, hériteront de cette méthode supplémentaire.</p>
+
+<p>Au lieu d'utiliser jQuery.prototype ou $.prototype, jQuery utilise un alias qui s'écrit $.fn. <br>
+En effet, le prototype est avant tout un objet qui va contenir les fonctions-méthodes qui pourront être héritées par les objets créés par jQuery. <br>
+L'abréviation fn pour fonctions semble donc plus adaptée.</p>
+
+<p>Le but d'un plugin est de faire quelque chose avec une collection d'éléments du DOM.</p>
+
+<p>Chaque méthode fournie avec le noyau de jQuery, telle que .fadeOut () ou .addClass (), peut être considérée comme un plugin.</p>
+
+<p>Des informations sur la manière d'utiliser ou de créer un plugin peuvent être trouvées à l'adresse : http://learn.jquery.com/plugins/</p>
+
+<p>Pour lister les plugins existant, rendez-vous à l'adresse :<br>
+http://plugins.jquery.com/</p>
+
+	<hr>
+	<h1 class="logo"><span>Denis FINCK, email : finck@univ.fr</span></h1>
+
+
+
+</div>
+
+</body>
+</html>

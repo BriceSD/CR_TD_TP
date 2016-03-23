@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sautez de joie</title>
+    <link href="styles/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="header">
+      <h2>Sautez de joie, ventes privées</h2>
+      <p>Cliquez sur une image pour découvrir votre réduction</p>
+    </div>
+    <div id="main">
+      <div class="guess_box"><img src="images/jump1.jpg"/></div>
+      <div class="guess_box"><img src="images/jump2.jpg"/></div>
+      <div class="guess_box"><img src="images/jump3.jpg"/></div>
+      <div class="guess_box"><img src="images/jump4.jpg"/></div>
+    </div>
+
+    <script src="scripts/jquery.js"></script>
+    <script>
+      var win_msg = "<p>Votre remise de 20% avec le code SPECIAL20</p>";
+      var loose_msg = "<p>Vous n'avez rien gagner</p>";
+      $(document).ready(function() {
+        $(".guess_box").click( function() {
+          var img_avec_reduction = Math.floor(Math.random()*4);
+          var img_choisie = $(".guess_box").index();
+          $(this).append(img_avec_reduction == img_choisie ? win_msg : loose_msg);
+        $(".guess_box").off("click");
+        });
+      });
+    </script>
+  </body>
+</html>
